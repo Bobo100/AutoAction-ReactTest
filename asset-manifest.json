@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/myreactapp/static/css/main.073c9b0a.css",
-    "main.js": "/myreactapp/static/js/main.414e6648.js",
-    "static/js/787.16f177e3.chunk.js": "/myreactapp/static/js/787.16f177e3.chunk.js",
-    "static/media/logo.svg": "/myreactapp/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/myreactapp/index.html",
-    "main.073c9b0a.css.map": "/myreactapp/static/css/main.073c9b0a.css.map",
-    "main.414e6648.js.map": "/myreactapp/static/js/main.414e6648.js.map",
-    "787.16f177e3.chunk.js.map": "/myreactapp/static/js/787.16f177e3.chunk.js.map"
+    "main.css": "/AutoAction-ReactTest/static/css/main.073c9b0a.css",
+    "main.js": "/AutoAction-ReactTest/static/js/main.dabc0953.js",
+    "static/js/787.16f177e3.chunk.js": "/AutoAction-ReactTest/static/js/787.16f177e3.chunk.js",
+    "static/media/logo.svg": "/AutoAction-ReactTest/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/AutoAction-ReactTest/index.html",
+    "main.073c9b0a.css.map": "/AutoAction-ReactTest/static/css/main.073c9b0a.css.map",
+    "main.dabc0953.js.map": "/AutoAction-ReactTest/static/js/main.dabc0953.js.map",
+    "787.16f177e3.chunk.js.map": "/AutoAction-ReactTest/static/js/787.16f177e3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.414e6648.js"
+    "static/js/main.dabc0953.js"
   ]
 }
