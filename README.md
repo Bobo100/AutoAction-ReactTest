@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# React 使用Github Actions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 部屬到Github Pages
 
-## Available Scripts
+先安裝gh-pages套件
 
-In the project directory, you can run:
+```txt
+npm install gh-pages --save-dev
+```
 
-### `npm start`
+在package.json的scipr中加入下面這兩行
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```json
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build",
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+一般情形會長這樣
 
-### `npm test`
+```json
+"scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+},
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+在開頭加入homepage
 
-### `npm run build`
+```json
+"homepage": "https://{你的githubID}.github.io/{你的專案名稱}/",
+// 以我的專案例子來看
+"homepage": "https://bobo100.github.io/AutoAction-ReactTest/",
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+完成後便可以執行
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```txt
+npm run deploy
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 自動部屬 GitHub Action
 
-### `npm run eject`
+在你的專案下建立一個.github資料夾 之後在裡面再練立一個資料夾workflows
+變可建立自動化發佈檔案，名字自己決定，附檔名要是.yml
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```text
+name: Deploy using Github Action
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+jobs:
+  build:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    runs-on: ubuntu-latest
 
-## Learn More
+    strategy:
+      matrix:      
+        # node-version 可以只留自己需要的版本！！
+        node-version: [14.x, 16.x, 18.x]
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build # The folder the action should deploy.
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+到專案的Settings去更新Pages設定
+Source選擇GitHub Actions
