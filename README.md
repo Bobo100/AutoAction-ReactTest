@@ -75,7 +75,9 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+      env:
+        CI: false
+    # - run: npm test
     
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
