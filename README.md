@@ -84,6 +84,3 @@ jobs:
       with:
         folder: build # The folder the action should deploy.
 ```
-
-到專案的Settings去更新Pages設定
-Source選擇GitHub Actions
